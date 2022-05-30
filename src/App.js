@@ -10,6 +10,8 @@ function App() {
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
 
+  const serv = "https://react-task-tracker-agg.herokuapp.com/api";
+
   useEffect(() => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
@@ -19,14 +21,14 @@ function App() {
   }, []);
 
   const fetchTasks = async () => {
-    const res = await fetch("http://localhost:5001/tasks");
+    const res = await fetch(serv);
     const data = await res.json();
 
     return data;
   };
 
   const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5001/tasks/${id}`);
+    const res = await fetch(`${serv}/tasks/${id}`);
     const data = await res.json();
 
     return data;
@@ -34,7 +36,7 @@ function App() {
 
   // Add Task
   const addTask = async (task) => {
-    const res = await fetch("http://localhost:5001/tasks", {
+    const res = await fetch(`${serv}/tasks`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -49,7 +51,7 @@ function App() {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5001/tasks/${id}`, {
+    await fetch(`${serv}/tasks/${id}`, {
       method: "DELETE",
     });
 
@@ -60,7 +62,7 @@ function App() {
     const taskToToggle = await fetchTask(id);
     const updatedTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
 
-    const res = await fetch(`http://localhost:5001/tasks/${id}`, {
+    const res = await fetch(`${serv}/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
