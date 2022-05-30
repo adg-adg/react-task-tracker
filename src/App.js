@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   const fetchTasks = async () => {
-    const res = await fetch(serv);
+    const res = await fetch(`${serv}/tasks`);
     const data = await res.json();
 
     return data;
